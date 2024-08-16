@@ -1,0 +1,25 @@
+{
+  "name": "chrome-extension-template",
+  "description": "Template to make chrome extension made using Rollup and Typescript",
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "build": "rollup --config",
+    "build:prod": "cross-env NODE_ENV=production rollup --config"
+  },
+  "devDependencies": {
+    "@rollup/plugin-alias": "^5.1.0",
+    "@rollup/plugin-terser": "^0.4.4",
+    "@types/archiver": "^6.0.2",
+    "@types/chrome": "^0.0.270",
+    "@types/html-minifier-terser": "^7.0.2",
+    "archiver": "^7.0.1",
+    "cross-env": "^7.0.3",
+    "html-minifier-terser": "^7.2.0",
+    "rollup": "^4.20.0",
+    "rollup-plugin-copy": "^3.5.0",
+    "rollup-plugin-delete": "^2.0.0",
+    "rollup-plugin-typescript2": "^0.36.0",
+    "typescript": "^5.5.4"
+  }
+}
