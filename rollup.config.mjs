@@ -1,5 +1,6 @@
 import { defineConfig } from "rollup";
 import del from "rollup-plugin-delete";
+import nodeResolve from "@rollup/plugin-node-resolve";
 import typescript from "rollup-plugin-typescript2";
 import alias from "@rollup/plugin-alias";
 import { minify } from "html-minifier-terser";
@@ -22,6 +23,9 @@ export default defineConfig(async () => ({
   plugins: [
     del({
       targets: "build/*",
+    }),
+    nodeResolve({
+      extensions: [".js", ".jsx", ".ts", ".tsx"],
     }),
     typescript(),
     alias({
