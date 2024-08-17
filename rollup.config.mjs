@@ -5,6 +5,8 @@ import typescript from "rollup-plugin-typescript2";
 import alias from "@rollup/plugin-alias";
 import { minify } from "html-minifier-terser";
 import copy from "rollup-plugin-copy";
+import progress from "rollup-plugin-progress";
+
 import path from "path";
 import { fileURLToPath } from "url";
 
@@ -61,6 +63,9 @@ export default defineConfig(async () => ({
             : undefined,
         },
       ],
+    }),
+    progress({
+      clearLine: false,
     }),
   ],
 }));
