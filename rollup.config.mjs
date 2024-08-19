@@ -53,47 +53,11 @@ export default defineConfig(async () => ({
     isProduction && (await import("@rollup/plugin-terser")).default(),
     copy({
       targets: [
-        {
-          src: "manifest.json",
-          dest: "build",
-        },
-        {
-          src: "src/assets/*",
-          dest: "build/assets",
-        },
-        {
-          src: "src/pages/popup/popup.html",
-          dest: "build",
-          transform: isProduction
-            ? (contents) =>
-                minify(contents.toString(), {
-                  removeComments: true,
-                  collapseWhitespace: true,
-                  minifyCSS: true,
-                  minifyJS: true,
-                })
-            : undefined,
-        },
-        {
-          src: "src/pages/popup/popup.css",
-          dest: "build",
-          transform: isProduction
-            ? (contents) =>
-                cssnano()
-                  .process(contents.toString())
-                  .then((result) => result.css)
-            : undefined,
-        },
-        {
-          src: "src/pages/content/content.css",
-          dest: "build",
-          transform: isProduction
-            ? (contents) =>
-                cssnano()
-                  .process(contents.toString())
-                  .then((result) => result.css)
-            : undefined,
-        },
+        copyFile("manifest.json", "build"),
+        copyFile("src/assets/*", "build/assets"),
+        copyFile("src/pages/popup/popup.html", "build"),
+        copyFile("src/pages/popup/popup.css", "build"),
+        copyFile("src/pages/content/content.css", "build"),
       ],
     }),
     progress({
@@ -101,3 +65,42 @@ export default defineConfig(async () => ({
     }),
   ],
 }));
+
+const copyFile = (src, dest) => {
+  const ext = src.split(".").pop();
+  switch (ext) {
+    case "html": {
+      return {
+        src,
+        dest,
+        transform: isProduction
+          ? (contents) =>
+              minify(contents.toString(), {
+                removeComments: true,
+                collapseWhitespace: true,
+                minifyCSS: true,
+                minifyJS: true,
+              })
+          : undefined,
+      };
+    }
+    case "css": {
+      return {
+        src,
+        dest,
+        transform: isProduction
+          ? (contents) =>
+              cssnano()
+                .process(contents.toString())
+                .then((result) => result.css)
+          : undefined,
+      };
+    }
+    default: {
+      return {
+        src,
+        dest,
+      };
+    }
+  }
+};
