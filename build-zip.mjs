@@ -44,6 +44,6 @@ achiverZip.on("error", (err) => {
 
 achiverZip.pipe(fileStream);
 
-achiverZip.directory("/build", false);
+achiverZip.directory(path.resolve(__dirname, "build"), false);
 
 achiverZip.finalize();
